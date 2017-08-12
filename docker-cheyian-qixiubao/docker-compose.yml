@@ -1,0 +1,93 @@
+cheyian-qixiubao:
+  container_name: cheyian-qixiubao
+  restart: always
+  image: hub.oapol.com/cheyian-qixiubao:v48
+  environment:
+    - YII_ENV=prod
+  extra_hosts:
+    - "b2b.api.cheyian.com:172.16.0.22"
+    - "b2c.api.cheyian.com:172.16.0.21"
+    - "member.api.cheyian.com:172.16.0.20"
+    - "auth.api.cheyian.com:172.16.0.19"
+    - "napi.cheyian.com:114.55.183.7"
+    - "member.site.cheyian.com:172.16.0.18"
+  ports:
+        - "8014:80"
+
+cheyian-auth:
+  container_name: cheyian-auth
+  restart: always
+  image: hub.oapol.com/cheyian-auth:v46
+  environment:
+    - YII_ENV=prod
+    - DOCKER_EXPORT_MEMCACHED_HOST=172.16.0.8
+    - DOCKER_EXPORT_MYSQL_DB=172.16.0.3
+    - DOCKER_EXPORT_MYSQL_DB_BASE=172.16.0.3
+    - DOCKER_EXPORT_MYSQL_DB_BASE_PASSWORD=iHYIFUrz9XpE
+    - DOCKER_EXPORT_MYSQL_DB_BASE_USERNAME=produser
+    - DOCKER_EXPORT_MYSQL_DB_PASSWORD=iHYIFUrz9XpE
+    - DOCKER_EXPORT_MYSQL_DB_USERNAME=produser
+    - DOCKER_EXPORT_REDIS_HOST_NAME=172.16.0.2
+    - DOCKER_EXPORT_REDIS_PASSWORD=E30a84d30
+    - DOCKER_EXPORT_STATIC_DOMAIN=http:/auth.static.cheyian.com
+    - DOCKER_EXPORT_VIN_API_DOMAIN=http://auth.cheyian.com
+    - DOCKER_EXPORT_ANALYSE_DOMAIN=http://172.16.0.4:8080
+    - DOCKER_EXPORT_YII_DEBUG=false
+    - DOCKER_EXPORT_YII_ENV=prod
+  extra_hosts:
+    - "b2b.api.cheyian.com:172.16.0.22"
+    - "b2c.api.cheyian.com:172.16.0.21"
+    - "member.api.cheyian.com:172.16.0.20"
+    - "auth.api.cheyian.com:172.16.0.19"
+    - "napi.cheyian.com:114.55.183.7"
+    - "member.site.cheyian.com:172.16.0.18"
+  ports:
+        - "8013:80"
+
+cheyian-qixiubao:
+  container_name: cheyian-member
+  restart: always
+  image: hub.oapol.com/cheyian-member:v12
+  environment:
+    - YII_ENV=prod
+  extra_hosts:
+    - "b2b.api.cheyian.com:172.16.0.22"
+    - "b2c.api.cheyian.com:172.16.0.21"
+    - "member.api.cheyian.com:172.16.0.20"
+    - "auth.api.cheyian.com:172.16.0.19"
+    - "napi.cheyian.com:114.55.183.7"
+    - "member.site.cheyian.com:172.16.0.18"
+  ports:
+        - "8012:80"
+
+cheyian-b2c:
+  container_name: cheyian-b2c
+  restart: always
+  image: hub.oapol.com/cheyian-b2c:v10
+  environment:
+    - YII_ENV=prod
+  extra_hosts:
+    - "b2b.api.cheyian.com:172.16.0.22"
+    - "b2c.api.cheyian.com:172.16.0.21"
+    - "member.api.cheyian.com:172.16.0.20"
+    - "auth.api.cheyian.com:172.16.0.19"
+    - "napi.cheyian.com:114.55.183.7"
+    - "member.site.cheyian.com:172.16.0.18"
+  ports:
+        - "8011:80"
+
+cheyian-b2b:
+  container_name: cheyian-b2b
+  restart: always
+  image: hub.oapol.com/cheyian-b2b:v50
+  environment:
+    - YII_ENV=prod
+  extra_hosts:
+    - "b2b.api.cheyian.com:172.16.0.22"
+    - "b2c.api.cheyian.com:172.16.0.21"
+    - "member.api.cheyian.com:172.16.0.20"
+    - "auth.api.cheyian.com:172.16.0.19"
+    - "napi.cheyian.com:114.55.183.7"
+    - "member.site.cheyian.com:172.16.0.18"
+  ports:
+        - "8010:80"

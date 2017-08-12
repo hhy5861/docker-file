@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: cheyian-member-test
+  namespace: development
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cheyian-member
+    spec:
+      containers:
+      - name: cheyian-member
+        image: hub.oapol.com/cheyian-member:v15
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 80
+        env:
+            - name: YII_ENV
+              value: "test"
+      imagePullSecrets:
+        - name: registry-secret

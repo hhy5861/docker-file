@@ -1,0 +1,9 @@
+cheyian-zentao:
+    container_name: cheyian-zentao
+    restart: always
+    image: hub.oapol.com/cheyian-zentao:latest
+    volumes:
+        - "/data/docker/zentao/data:/www/www/data"
+        - "/data/docker/zentao/config:/www/config"
+    ports:
+        - "8084:80"

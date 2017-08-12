@@ -1,0 +1,13 @@
+cheyian_dnsmasq:
+    container_name: cheyian-dnsmasq
+    restart: always
+    cap-add: - NET_ADMIN
+    image: hub.oapol.com/cheyian-dnsmasq
+    command: "-S /consul/10.17.0.2"
+    ports:
+        - "53:53/tcp"
+        - "53:53/udp"
+
+docker run -d -p 53:53/tcp -p 53:53/udp --cap-add=NET_ADMIN --name cheyian-dnsmasp andyshinn/dnsmasq -S /consul/172.16.0.4
+
+docker run -d -p 53:53/tcp -p 53:53/udp --cap-add=NET_ADMIN --name cheyian-dnsmasp hub.oapol.com/cheyian-dnsmasq

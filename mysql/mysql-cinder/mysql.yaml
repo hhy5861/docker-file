@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cheyian-mysql
+  namespace: production
+  labels: 
+    name: cheyian-mysql
+spec: 
+  containers: 
+    - resources:
+        limits :
+          cpu: 0.5
+      image: hub.oapol.com/mysql
+      name: cheyian-mysql
+      env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: tlslpc
+      ports: 
+        - containerPort: 3306
+          name: cheyian-mysql
+      volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+  volumes:
+    - name: mysql-persistent-storage
+      hostPath:
+        path: "/data/mysql"
+  imagePullSecrets:
+    - name: registry-secret

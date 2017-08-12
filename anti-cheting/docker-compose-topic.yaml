@@ -1,0 +1,3 @@
+create-topic:
+  image: ches/kafka
+  command: kafka-topics.sh --create --topic test --replication-factor 1 --partitions 1 --zookeeper $ZK_IP:2181

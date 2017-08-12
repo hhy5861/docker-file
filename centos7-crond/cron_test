@@ -1,0 +1,1 @@
+*/5 * * * * root echo "foo" >> /tmp/cron.log 2>&1

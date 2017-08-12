@@ -1,0 +1,10 @@
+sphinx:
+  container_name: docker_sphinx_agent1
+  restart: always
+  image: hub.oapol.com/sphinx_agent
+  user: root
+  volumes:
+    - "/data/docker/sphinx-conf/prod/conf:/etc/sphinxsearch/"
+  ports:
+    - "9307:9306"
+    - "9313:9312"

@@ -1,0 +1,11 @@
+cheyian-create-batch:
+    container_name: cheyian-create-batch
+    restart: always
+    image: hub.oapol.com/cheyian-create-batch:v1.0.1
+    environment:
+        - DOCKER_EXPORT_DB_HOST=10.0.1.71
+        - DOCKER_EXPORT_DB_NAME=che1base
+        - DOCKER_EXPORT_DB_USER=developer
+        - DOCKER_EXPORT_DB_PASSWD=ZcFKioeVEh7e9MGK
+    ports:
+        - "8080:8080"

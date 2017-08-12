@@ -1,0 +1,21 @@
+sphinx1:
+  container_name: docker_sphinx_agent1
+  restart: always
+  image: hub.oapol.com/sphinx_agent
+  user: root
+  volumes:
+    - "/data/docker/sphinx/conf:/etc/sphinxsearch/"
+  ports:
+    - "9307:9306"
+    - "9313:9312"
+
+sphinx2:
+  container_name: docker_sphinx_agent2
+  restart: always
+  image: hub.oapol.com/sphinx_agent
+  user: root
+  volumes:
+    - "/data/docker/sphinx/conf:/etc/sphinxsearch/"
+  ports:
+    - "9308:9306"
+    - "9314:9312"

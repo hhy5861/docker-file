@@ -1,0 +1,1 @@
+kubectl create secret docker-registry registry-secret --docker-server=hub.oapol.com --docker-username=admin --docker-password=cheyian --docker-email=hhy5861@163.com

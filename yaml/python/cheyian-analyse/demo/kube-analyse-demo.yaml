@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cheyian-analyse-svc
+  namespace: production
+  labels:
+    app: cheyian-analyse
+spec:
+  type: NodePort
+  ports:
+  - port: 5000
+    protocol: TCP
+  selector:
+    app: cheyian-analyse
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: cheyian-analyse-demo
+  namespace: production
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cheyian-analyse
+    spec:
+      containers:
+      - name: cheyian-analyse
+        image: hub.oapol.com/cheyian-analyse:latest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 5000
+        env:
+          - name: DB_HOST
+            value: "192.168.110.35"
+          - name: DB_PASSWD
+            value: "dm2019che0an"
+          - name: DB_USER
+            value: "demo"
+          - name: DB_NAME
+            value: "che1base"
+      imagePullSecrets:
+        - name: registry-secret

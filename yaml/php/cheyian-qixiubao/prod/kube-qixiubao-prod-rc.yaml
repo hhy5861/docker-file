@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: cheyian-qixiubao-prod
+  namespace: production
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: qixiubao
+    spec:
+      containers:
+      - name: cheyian-qixiubao
+        image: hub.oapol.com/cheyian-qixiubao:v65
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 80
+        env:
+          - name: YII_ENV
+            value: "prod"
+      imagePullSecrets:
+        - name: registry-secret

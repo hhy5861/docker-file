@@ -1,0 +1,8 @@
+base-auth-online:
+    container_name: base-qixiubao-dev
+    restart: always
+    image: hub.oapol.com/php_qixiubao:test
+    environment:
+       - YII_ENV=dev
+    ports:
+        - "8083:80"

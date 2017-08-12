@@ -1,0 +1,43 @@
+version: "2"
+services:
+  pdns:
+    build: . 
+    #image: secns/pdns
+    ports:
+    - "53:53"
+    - "53:53/udp"
+    - "8080:80"
+    environment:
+    - MYSQL_HOST=172.16.0.3
+    - MYSQL_USER=produser
+    - DB_ENV_MYSQL_ROOT_PASSWORD=iHYIFUrz9XpE
+    - MYSQL_PORT=3306
+    - MYSQL_DB=powerdns
+    - POWERADMIN_NS1=ns1.prod.cheyian.com
+    - POWERADMIN_NS2=ns2.prod.cheyian.com
+    - PDNS_ALLOW_AXFR_IPS=127.0.0.1
+    - PDNS_DISTRIBUTOR_THREADS=3
+    - PDNS_CACHE_TTL=20
+    - PDNS_RECURSIVE_CACHE_TTL=10
+
+
+cheyian-poweradmin:
+  container_name: cheyian-powerdns
+  restart: always
+  image: hub.oapol.com/pdns-poweradmin
+  environment:
+    - MYSQL_HOST=172.16.0.3
+    - MYSQL_USER=produser
+    - DB_ENV_MYSQL_ROOT_PASSWORD=iHYIFUrz9XpE
+    - MYSQL_PORT=3306
+    - MYSQL_DB=powerdns
+    - POWERADMIN_NS1=ns1.prod.cheyian.com
+    - POWERADMIN_NS2=ns2.prod.cheyian.com
+    - PDNS_ALLOW_AXFR_IPS=127.0.0.1
+    - PDNS_DISTRIBUTOR_THREADS=3
+    - PDNS_CACHE_TTL=20
+    - PDNS_RECURSIVE_CACHE_TTL=10
+  ports:
+    - "53:53"
+    - "53:53/udp"
+    - "8080:80"

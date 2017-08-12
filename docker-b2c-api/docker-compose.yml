@@ -1,0 +1,8 @@
+cheyian-b2b:
+    container_name: cheyian-b2c-api
+    restart: always
+    image: hub.oapol.com/cheyian-b2c:v13
+    environment:
+       - YII_ENV=test
+    ports:
+        - "82:80"

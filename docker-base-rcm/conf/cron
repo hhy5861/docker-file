@@ -1,0 +1,2 @@
+* * * * *	    echo "Mike test crond"
+*/2 * * * *	    echo "Mike test crond"

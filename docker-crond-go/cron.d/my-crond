@@ -1,0 +1,2 @@
+*/2 * * * *   echo mike
+*/5 * * * *   echo test crond

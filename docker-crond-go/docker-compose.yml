@@ -1,0 +1,8 @@
+cheyian-crond-go:
+    container_name: cheyian-crond-go
+    restart: always
+    image: hub.oapol.com/docker-crond-go:latest
+    volumes:
+        - "/data/docker/docker-crond-go/cron.d:/etc/cron.d"
+    ports:
+        - "2022:22"

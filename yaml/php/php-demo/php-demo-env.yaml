@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: php-env-svc
+  labels:
+    app: php-env
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    protocol: TCP
+    name: http
+  selector:
+    app: php-env
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: php-env-rc
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: php-env
+    spec:
+      containers:
+      - name: php-env
+        image: hub.oapol.com/php-tengine:v2
+        resources:
+        requests:
+          cpu: 100m
+          memory: 100Mi
+        ports:
+        - containerPort: 80
+        env:
+          - name: "REDIS_ADDR"
+            value: "116.228.172.169"
+      imagePullSecrets:
+        - name: registry-secret

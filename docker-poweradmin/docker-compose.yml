@@ -1,0 +1,16 @@
+cheyian-poweradmin:
+  container_name: cheyian-poweradmin
+  restart: always
+  image: hub.oapol.com/poweradmin
+  dns: 172.16.0.26
+  dns_search: cheyian.com
+  environment:
+    - DB_HOST=172.16.0.3
+    - DB_PORT=3306
+    - DB_NAME=powerdns
+    - DB_USER=produser
+    - DB_PASS=iHYIFUrz9XpE
+    - DNS_NS1=172.16.0.26
+    - DNS_NS2=100.100.2.136
+  ports:
+        - "8080:80"

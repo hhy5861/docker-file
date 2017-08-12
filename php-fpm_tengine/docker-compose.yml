@@ -1,0 +1,13 @@
+php_fpm:
+  image: php-fpm:5.5.34
+  ports:
+        - "9000"
+        
+tengine:
+  image: hhy5861/tengine:2.1.2
+  links:
+        - "php_fpm:php_fpm"
+  volumes_from:
+        - "php_fpm"
+  ports: 
+        - "8080:80"

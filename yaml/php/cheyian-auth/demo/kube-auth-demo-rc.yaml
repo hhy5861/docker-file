@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: cheyian-auth-demo
+  namespace: production
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cheyian-auth
+    spec:
+      containers:
+      - name: cheyian-auth
+        image: hub.oapol.com/cheyian-auth:v73
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 80
+        env:
+          - name: DOCKER_EXPORT_MEMCACHED_HOST
+            value: "10.0.1.72"
+          - name: DOCKER_EXPORT_MYSQL_DB
+            value: "10.0.1.72"
+          - name: DOCKER_EXPORT_MYSQL_DB_BASE
+            value: "10.0.1.72"
+          - name: DOCKER_EXPORT_MYSQL_DB_BASE_PASSWORD
+            value: "dm2019che0an"
+          - name: DOCKER_EXPORT_MYSQL_DB_BASE_USERNAME
+            value: "demo"
+          - name: DOCKER_EXPORT_MYSQL_DB_PASSWORD
+            value: "dm2019che0an"
+          - name: DOCKER_EXPORT_MYSQL_DB_USERNAME
+            value: "demo"
+          - name: DOCKER_EXPORT_REDIS_HOST_NAME
+            value: "10.0.1.72"
+          - name: DOCKER_EXPORT_STATIC_DOMAIN
+            value: "http://auth.static.demo.oapol.com"
+          - name: DOCKER_EXPORT_VIN_API_DOMAIN
+            value: "http://b2bapi.demo.cheyian.com"
+          - name: DOCKER_EXPORT_ANALYSE_DOMAIN
+            value: "http://analyse.demo.oapol.com"
+          - name: DOCKER_EXPORT_ISCNAME
+            value: '0'
+          - name: DOCKER_EXPORT_OSS_ACCESS_ID
+            value: "r4g237P433J0Wzet"
+          - name: DOCKER_EXPORT_OSS_ACCESS_KEY
+            value: "k2HPKcV6dkKX4hfHYS2buYdr8wkfkt"
+          - name: DOCKER_EXPORT_OSS_DEFAULT_BUCKET
+            value: "cheyian-test"
+          - name: DOCKER_EXPORT_OSS_ENDPOINT
+            value: "oss-cn-hangzhou.aliyuncs.com"
+          - name: DOCKER_EXPORT_UPLOAD_IMAGE_DOMAIN
+            value: "http://auth.api.demo.oapol.com"
+          - name: DOCKER_EXPORT_OSS_SYTLE_DOMAIN
+            value: "http://cheyian-test.img-cn-hangzhou.aliyuncs.com"
+          - name: DOCKER_EXPORT_OSS_CHEYIAN_IMAGE_DOMAIN
+            value: "http://cheyian.oss-cn-hangzhou.aliyuncs.com"
+          - name: DOCKER_EXPORT_OSS_CHEYIAN_TEST_IMAGE_DOMAIN
+            value: "http://%s.oss-cn-hangzhou.aliyuncs.com"
+          - name: DOCKER_EXPORT_CREATE_ORDER_DOMAIN
+            value: "http://create-order.demo.oapol.com"
+      imagePullSecrets:
+        - name: registry-secret

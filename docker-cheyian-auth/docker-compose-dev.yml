@@ -1,0 +1,19 @@
+cheyian-auth:
+    container_name: cheyian-auth
+    restart: always
+    image: hub.oapol.com/cheyian-auth
+    environment:
+       - DOCKER_EXPORT_MEMCACHED_HOST=192.168.110.37
+       - DOCKER_EXPORT_MYSQL_DB=192.168.110.37
+       - DOCKER_EXPORT_MYSQL_DB_BASE=192.168.110.37
+       - DOCKER_EXPORT_MYSQL_DB_BASE_PASSWORD=ZcFKioeVEh7e9MGK
+       - DOCKER_EXPORT_MYSQL_DB_BASE_USERNAME=developer
+       - DOCKER_EXPORT_MYSQL_DB_PASSWORD=ZcFKioeVEh7e9MGK
+       - DOCKER_EXPORT_MYSQL_DB_USERNAME=developer
+       - DOCKER_EXPORT_REDIS_HOST_NAME=192.168.110.37
+       - DOCKER_EXPORT_STATIC_DOMAIN=http://auth.static.test.oapol.com
+       - DOCKER_EXPORT_VIN_API_DOMAIN=hhttp://auth.site.test.oapol.com
+       - DOCKER_EXPORT_YII_DEBUG=true
+       - DOCKER_EXPORT_YII_ENV=dev
+    ports:
+        - "80:80"

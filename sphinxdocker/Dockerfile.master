@@ -1,0 +1,19 @@
+FROM    hub.oapol.com/docker-crond-go:latest
+
+COPY sphinxsearch_2.2.10-release-1-jessie_amd64.deb /
+RUN apt-get update
+RUN apt-get install -y mysql-client unixodbc libpq5
+RUN dpkg -i /sphinxsearch_2.2.10-release-1-jessie_amd64.deb
+
+RUN mkdir -p /var/data
+RUN mkdir -p /data/sphinx/data
+RUN mkdir -p /data/sphinx/logs
+RUN mkdir -p /data/sphinx/run
+
+ADD start.sh /start.sh 
+ADD lordsearchd.sh /
+ADD searchd.sh /
+
+RUN chmod a+x searchd.sh
+
+VOLUME ["/etc/sphinxsearch"]

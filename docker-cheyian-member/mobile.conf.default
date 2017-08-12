@@ -1,0 +1,51 @@
+server 
+{
+    listen       80;
+    server_name  member.api.test.oapol.com;
+    charset      utf-8;
+    root        /www/index/web/api;
+    access_log  /var/log/nginx/mobeli.api.log mike;
+
+    index  index.php;
+    location /
+    {
+        if (!-e $request_filename)
+        {
+            rewrite ^/(.*) /index.php last;
+        }
+    }
+
+    location ~ .*\.(php|php7)?$
+    {
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+    }
+}
+
+server 
+{
+    listen       80;
+    server_name  member.site.test.oapol.com;
+    charset utf-8;
+    root        /www/index/web/site;
+    access_log  /var/log/nginx/mobeli.site.log mike;
+
+    index  index.php;
+    location /
+    {
+        if (!-e $request_filename)
+        {
+            rewrite ^/(.*) /index.php last;
+        }
+    }
+
+    location ~ .*\.(php|php7)?$
+    {
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+    }
+}

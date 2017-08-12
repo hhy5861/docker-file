@@ -1,0 +1,67 @@
+zookeeper:
+  container_name: zookeeper
+  restart: always
+  image: jplock/zookeeper:3.4.6
+
+kafka:
+  container_name: kafka
+  restart: always
+  image: ches/kafka
+  links:
+    - "zookeeper:zookeeper"
+  volumes:
+    - "/data/kafka/logs:/logs"
+  ports:
+    - "9092:9092"
+
+dory-server:
+  container_name: dory-server
+  restart: always
+  image: hhy5861/dory-server
+  links:
+    - "kafka:kafka"
+  volumes:
+    - "/root/"
+  ports:
+    - "9090:9090"
+    - "9080:9080"
+    
+dory-report:
+  container_name: dory-report
+  restart: always
+  image: hhy5861/report
+  links:
+    - "dory-server:dory-server"
+  ports:
+    - "3090:3000"
+
+redis-server:
+  container_name: redis-server
+  restart: always
+  image: bitnami/redis
+  ports:
+    - "6379:6379"
+  volumes:
+    - '/data/redis:/bitnami/redis'
+  environment:
+      - REDIS_PASSWORD=actRedis
+
+acapi:
+  container_name: acapi
+  restart: always
+  image: hhy5861/acapi:t-1.0.0
+  links:
+    - "redis-server:redis-server"
+  ports:
+    - "3010:3000"
+
+acserver:
+  container_name: acserver
+  restart: always
+  image: hhy5861/acserver:t-1.0.2
+  links:
+    - "acapi:acapi"
+    - "dory-report:dory-report"
+  ports:
+    - "3000:3000"
+    - "9300:9300"

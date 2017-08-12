@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: cheyian-redis-sentinel
+  namespace: development 
+spec:
+  replicas: 1
+  selector:
+    redis-sentinel: "true"
+  template:
+    metadata:
+      labels:
+        name: cheyian-redis-sentinel
+        redis-sentinel: "true"
+        role: cheyian-sentinel
+    spec:
+      containers:
+      - name: cheyian-sentinel
+        image: hub.oapol.com/redis:v1
+        env:
+          - name: SENTINEL
+            value: "true"
+        ports:
+          - containerPort: 26379

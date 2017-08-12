@@ -1,0 +1,37 @@
+kind: "ReplicationController"
+apiVersion: "v1"
+metadata: 
+  name: "redis-slave"
+  namespace: production
+  labels: 
+    app: "redis"
+    role: "slave"
+spec: 
+  replicas: 1
+  selector: 
+    app: "redis"
+    role: "slave"
+  template: 
+    metadata: 
+      labels: 
+        app: "redis"
+        role: "slave"
+    spec: 
+      containers: 
+        - name: "redis-slave"
+          image: "hub.oapol.com/cheyian-redis-slave"
+          env:
+          - name: GET_HOSTS_FROM
+            value: env
+          ports: 
+            - name: "redis-server"
+              containerPort: 6379
+          volumeMounts:
+            - mountPath: "/var/lib/redis"
+              name: redis-slave-data
+      volumes:
+        - name: redis-slave-data
+          flocker:
+            datasetName: redis-slave
+      imagePullSecrets:
+        - name: registry-secret

@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cheyian-create-batch-svc
+  namespace: development
+  labels:
+    app: cheyian-create-batch
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app: cheyian-create-batch
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: cheyian-create-batch-test
+  namespace: development
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cheyian-create-batch
+    spec:
+      containers:
+      - name: cheyian-create-batch
+        image: hub.oapol.com/cheyian-create-batch:v1.0.1
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8080
+        env:
+          - name: DOCKER_EXPORT_DB_HOST
+            value: "10.0.1.71"
+          - name: DOCKER_EXPORT_DB_NAME
+            value: "che1base"
+          - name: DOCKER_EXPORT_DB_USER
+            value: "developer"
+          - name: DOCKER_EXPORT_DB_PASSWD
+            value: "ZcFKioeVEh7e9MGK"
+      imagePullSecrets:
+        - name: registry-secret

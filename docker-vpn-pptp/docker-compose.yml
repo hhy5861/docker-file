@@ -1,0 +1,9 @@
+cheyian-vpn:
+    container_name: cheyian-vpn
+    restart: always
+    privileged: true
+    image: hub.oapol.com/cheyian-vpn
+    volumes:
+        - "local_chap_secrets:/etc/ppp/chap-secrets"
+    ports:
+        - "1723:1723"

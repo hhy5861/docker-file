@@ -1,0 +1,10 @@
+sphinx_master:
+  container_name: docker_sphinx_master
+  restart: always
+  image: hub.oapol.com/sphinx_master
+  command: "/lordsearchd.sh"
+  volumes:
+    - "/data/docker/sphinx/conf:/etc/sphinxsearch/"
+  ports:
+    - "9306:9306"
+    - "9312:9312"

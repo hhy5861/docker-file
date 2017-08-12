@@ -1,0 +1,49 @@
+kind: List
+apiVersion: v1
+items:
+- kind: ReplicationController
+  apiVersion: v1
+  metadata:
+    labels:
+      app: kube-ui-new
+      version: new-ui
+    name: kube-ui-new
+  spec:
+    replicas: 1
+    selector:
+      app: kube-ui-new
+    template:
+      metadata:
+        labels:
+          app: kube-ui-new
+      spec:
+        containers:
+        - name: kube-ui-new
+          image: hub.oapol.com/kube-ui:new-ui
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          args:
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 30
+            timeoutSeconds: 30
+        imagePullSecrets:
+          - name: registry-secret
+- kind: Service
+  apiVersion: v1
+  metadata:
+    labels:
+      app: kube-ui-new
+      kubernetes.io/cluster-service: "true"
+    name: kube-ui-new
+  spec:
+    type: NodePort
+    ports:
+    - port: 8080
+      targetPort: 8080
+    selector:
+      app: kube-ui-new

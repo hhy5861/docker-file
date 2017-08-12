@@ -1,0 +1,15 @@
+cheyian-auth:
+    container_name: cheyian-group-buy
+    restart: always
+    image: hub.oapol.com/cheyian-group-buy
+    environment:
+       - Domain=http://group.buy.dev.oapol.com
+       - LogindDomain=http://member.api.test.oapol.com
+       - B2bDomain=http://b2bapi.test.cheyian.com
+       - WeixinPayDomain=http://www.test.cheyipei.com/mobile/middleware/index
+       - AliPayDomain=http://www.test.cheyipei.com/mobile/middleware/index
+       - NODE_ENV=prod
+       - Redis_host=10.0.1.71
+       - Redis_port=6379
+    ports:
+        - "3000:3000"

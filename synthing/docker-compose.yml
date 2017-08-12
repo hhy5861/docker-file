@@ -1,0 +1,30 @@
+syncthing:
+  container_name: syncthing
+  restart: always
+  image: hub.oapol.com/syncthing
+  volumes:
+    - "/data/docker/syncthing/config:/home/syncthing/.config/syncthing"
+    - "/data/gitlab:/home/syncthing/Sync/gitlab"
+    - "/data/docker/jenkins/data:/home/syncthing/Sync/jenkins"
+    - "/data/docker/registry:/home/syncthing/Sync/registry"
+    - "/data/docker/zentao/data:/home/syncthing/Sync/zentao"
+  ports:
+    - "8384:8384"
+    - "22000:22000"
+    - "21025:21025"
+
+
+syncthing:
+  container_name: syncthing
+  restart: always
+  image: hub.oapol.com/syncthing
+  volumes:
+    - "/data/docker/syncthing/config:/home/syncthing/.config/syncthing"
+    - "/data/mysql/backup:/home/syncthing/Sync/mysql"
+  ports:
+    - "8384:8384"
+    - "22000:22000"
+    - "21025:21025"
+
+
+  docker run -d --name syncthing -p 8384:8384 -p 22000:22000 -p 21025:21025 --restart=always -v /data/docker/syncthing/config:/home/syncthing/.config/syncthing -v /data/mysql/backup:/home/syncthing/Sync/mysql hub.oapol.com/syncthing

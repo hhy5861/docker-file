@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: cheyian-mysql
+  name: cheyian-mysql-svc
+  namespace: production
+spec:
+  type: NodePort
+  ports:
+    - port: 3306
+  selector:
+    name: cheyian-mysql

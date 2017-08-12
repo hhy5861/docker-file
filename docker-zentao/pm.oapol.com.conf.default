@@ -1,0 +1,18 @@
+server 
+{
+    listen       80;
+    server_name  pm.oapol.com pm.cheyian.com;
+    charset      utf-8;
+    root        /www/www;
+    access_log  /var/log/nginx/pm.oapol.com.log mike;
+
+    index  index.php;
+
+    location ~ .*\.(php|php7)?$
+    {
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+    }
+}

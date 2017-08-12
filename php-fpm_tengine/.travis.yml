@@ -1,0 +1,10 @@
+docker run \
+--name nginx_server \
+-d -p 8081:80 \
+--link php_fpm:php_fpm \
+--volumes-from php_fpm hhy5861/tengine:2.1.2
+
+
+docker run \
+--name php_fpm \
+-d php-fpm:5.5.34
