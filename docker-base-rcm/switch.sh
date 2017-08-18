@@ -48,11 +48,6 @@ if [ -f /var/www/html/conf/nginx/nginx-site-ssl.conf ]; then
   cp /var/www/html/conf/nginx/nginx-site-ssl.conf /etc/nginx/sites-available/default-ssl.conf
 fi
 
-# Enable cron config 
-if [ -f /var/www/html/conf/cron/cron.conf ]; then
-  cp -rf /var/www/html/conf/cron/cron.conf /etc/cron.d/cron.conf
-fi
-
 # Display PHP error's or not
 if [[ "$ERRORS" != "1" ]] ; then
  echo php_flag[display_errors] = off >> /usr/local/etc/php-fpm.conf
@@ -125,25 +120,8 @@ if [[ "$RUN_SCRIPTS" == "1" ]] ; then
   fi
 fi
 
-# default app config
-mv /var/www/html/environments/dev.default /var/www/html/environments/$SWITCH_ENV
 # Switch env config file
-if [[ "$SWITCH_ENV" == "dev" ]]
- then
-    cp -rf /var/www/html/environments/dev.dev/yii /var/www/html/
-    cp -rf /var/www/html/environments/dev.dev/index.php /var/www/html/backend/web/
-    cp -rf /var/www/html/environments/dev.dev/* /var/www/html/environments/dev
-elif [[ "$SWITCH_ENV" == "stage" ]]
- then
-    cp -rf /var/www/html/environments/dev.stage/yii /var/www/html/
-    cp -rf /var/www/html/environments/dev.stage/index.php /var/www/html/backend/web/
-    cp -rf /var/www/html/environments/dev.stage/* /var/www/html/environments/stage
- elif [[ "$SWITCH_ENV" == "test" ]]
- then
-    cp -rf /var/www/html/environments/dev.test/yii /var/www/html/
-    cp -rf /var/www/html/environments/dev.test/index.php /var/www/html/backend/web/
-    cp -rf /var/www/html/environments/dev.test/* /var/www/html/environments/test
- elif [[ "$SWITCH_ENV" == "prod" ]]
+if [[ "$SWITCH_ENV" == "prod" ]]
  then
     cp -rf /var/www/html/environments/prod/yii /var/www/html/
     COMFIGPARTH="/var/www/html/environments/prod"
@@ -152,6 +130,10 @@ elif [[ "$SWITCH_ENV" == "stage" ]]
    fi
    ${GIT_COMMAND} ${COMFIGPARTH} || exit 1
    chown -Rf nginx.nginx ${COMFIGPARTH}
+fi
+
+if [ ! -z "$SWITCH_ENV" ]; then
+ ./init --env=$SWITCH_ENV
 fi
 
 # Start supervisord and services
